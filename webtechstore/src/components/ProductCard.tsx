@@ -1,6 +1,6 @@
 "use client";
-import { ShoppingCart } from "phosphor-react";
-import { useCarrinho } from "./CarrinhoContext";
+import { Heart } from "phosphor-react";
+import { useFavoritos } from "./FavoritosContext";
 import { useState } from "react";
 import Toast from "./Toast";
 
@@ -19,21 +19,28 @@ export default function ProductCard({
   imagem,
   categoria,
 }: ProductCardProps) {
-  const { adicionarItem } = useCarrinho();
+  const { adicionarFavorito, removerFavorito, isFavorito } = useFavoritos();
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  const handleAdicionarCarrinho = () => {
-    adicionarItem({
-      id,
-      nome,
-      preco,
-      imagem,
-      categoria,
-    });
+  const handleToggleFavorito = () => {
+    if (isFavorito(id)) {
+      removerFavorito(id);
+      setToastMessage(`${nome} removido dos favoritos!`);
+    } else {
+      adicionarFavorito({
+        id,
+        nome,
+        preco,
+        imagem,
+        categoria,
+      });
+      setToastMessage(`${nome} adicionado aos favoritos!`);
+    }
     setShowToast(true);
   };
   return (
-    <div className="p-6 cursor-pointer sm:p-1 ">
+    <div className="p-2 cursor-pointer sm:p-4 lg:p-0">
       <div className="aspect-square mb-2 overflow-hidden">
         <img
           src={imagem}
@@ -43,8 +50,8 @@ export default function ProductCard({
       </div>
 
       <div className="relative">
-        <div className="space-y-2 pr-12">
-          <h3 className="font-medium sm:text-base text-foreground truncate">
+        <div className="space-y-1 sm:space-y-2 pr-10 sm:pr-12">
+          <h3 className="font-medium text-sm sm:text-base text-foreground">
             {nome}
           </h3>
           <span className="text-xs sm:text-sm font-semibold text-primary">
@@ -53,17 +60,22 @@ export default function ProductCard({
         </div>
 
         <button
-          onClick={handleAdicionarCarrinho}
-          aria-label="Adicionar ao carrinho"
-          className="absolute bottom-0 right-1 w-8 h-8 cursor-pointer flex items-center justify-center bg-yellow-50 rounded-md text-yellow hover:bg-yellow-100 transition-colors dark:bg-theme-bg"
+          onClick={handleToggleFavorito}
+          aria-label={
+            isFavorito(id) ? "Remover dos favoritos" : "Adicionar aos favoritos"
+          }
+          className="absolute bottom-0 right-0 w-6 h-6 sm:w-8 sm:h-8 cursor-pointer flex items-center justify-center bg-red-50 rounded-md text-red-500 hover:bg-red-100 transition-colors dark:bg-destructive/20 hover:dark:bg-destructive/30"
         >
-          <ShoppingCart size={16} />
+          <Heart
+            size={14}
+            className={`sm:w-4 sm:h-4 ${isFavorito(id) ? "fill-red-500" : ""}`}
+          />
         </button>
       </div>
 
       {showToast && (
         <Toast
-          message={`${nome} adicionado ao carrinho!`}
+          message={toastMessage}
           type="success"
           onClose={() => setShowToast(false)}
         />

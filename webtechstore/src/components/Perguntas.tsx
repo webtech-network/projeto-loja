@@ -32,7 +32,7 @@ export default function Perguntas({ pergunta, resposta }: PerguntaProps) {
             className="text-gray-500 shrink-0 transition-transform duration-300"
           />
         )}
-        <h3 className="font-semibold text-foreground flex-1">{pergunta}</h3>
+        <h3 className="font-semibold text-foreground text-md flex-1">{pergunta}</h3>
       </button>
 
       <div

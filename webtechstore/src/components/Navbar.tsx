@@ -85,9 +85,14 @@ export default function Navbar() {
           {/* Ícones visíveis apenas no desktop */}
           <Link
             href="/favoritos"
-            className="hidden md:flex items-center gap-2 px-3 py-1 rounded-md hover:bg-background/5"
+            className="hidden md:flex items-center gap-2 px-3 py-1 rounded-md hover:bg-background/5 relative"
           >
-            <Heart size={18} />
+            <Heart
+              size={18}
+              className={
+                pathname === "/favoritos" ? "text-black dark:text-white" : ""
+              }
+            />
           </Link>
 
           <button
@@ -145,7 +150,16 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className="flex flex-col items-center gap-1 hover:text-foreground transition-colors"
               >
-                <Heart size={20} />
+                <div className="relative">
+                  <Heart
+                    size={20}
+                    className={
+                      pathname === "/favoritos"
+                        ? "fill-red-500 text-red-500"
+                        : ""
+                    }
+                  />
+                </div>
                 <span className="text-xs">Favoritos</span>
               </Link>
 

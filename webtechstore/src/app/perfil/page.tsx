@@ -479,7 +479,7 @@ export default function PerfilPage() {
               </div>
 
               {/* Footer do Modal */}
-              <div className="flex gap-4 p-6 border-t border-border">
+              <div className="flex font-medium gap-4 p-6 border-t border-border">
                 <button
                   onClick={handleCancel}
                   className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors"

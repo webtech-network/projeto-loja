@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import ThemeProvider from "../components/ThemeProvider";
 import { CarrinhoProvider } from "../components/CarrinhoContext";
+import { FavoritosProvider } from "../components/FavoritosContext";
 import BackToTop from "../components/BackToTop";
 
 const montserrat = Montserrat({
@@ -30,10 +31,12 @@ export default async function RootLayout({
       <head></head>
       <body className={`${montserrat.variable} font-montserrat antialiased`}>
         <ThemeProvider defaultTheme={theme}>
-          <CarrinhoProvider>
-            <div className="min-h-screen">{children}</div>
-            <BackToTop />
-          </CarrinhoProvider>
+          <FavoritosProvider>
+            <CarrinhoProvider>
+              <div className="min-h-screen">{children}</div>
+              <BackToTop />
+            </CarrinhoProvider>
+          </FavoritosProvider>
         </ThemeProvider>
       </body>
     </html>
