@@ -3,9 +3,10 @@ import { Heart } from "phosphor-react";
 import { useFavoritos } from "./FavoritosContext";
 import { useState } from "react";
 import Toast from "./Toast";
+import Link from "next/link";
 
 interface ProductCardProps {
-  id?: number;
+  id: number;
   nome: string;
   preco: string;
   imagem: string;
@@ -13,7 +14,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({
-  id = Math.random(),
+  id,
   nome,
   preco,
   imagem,
@@ -41,23 +42,27 @@ export default function ProductCard({
   };
   return (
     <div className="p-2 cursor-pointer sm:p-4 lg:p-0">
-      <div className="aspect-square mb-2 overflow-hidden">
-        <img
-          src={imagem}
-          alt={nome}
-          className="w-full h-full object-cover hover:scale-105 transition-transform"
-        />
-      </div>
+      <Link href={`/produto/${id}`}>
+        <div className="aspect-square mb-2 overflow-hidden">
+          <img
+            src={imagem}
+            alt={nome}
+            className="w-full h-full object-cover hover:scale-105 transition-transform"
+          />
+        </div>
+      </Link>
 
       <div className="relative">
-        <div className="space-y-1 sm:space-y-2 pr-10 sm:pr-12">
-          <h3 className="font-medium text-sm sm:text-base text-foreground">
-            {nome}
-          </h3>
-          <span className="text-xs sm:text-sm font-semibold text-primary">
-            R$ {preco}
-          </span>
-        </div>
+        <Link href={`/produto/${id}`}>
+          <div className="space-y-1 sm:space-y-2 pr-10 sm:pr-12">
+            <h3 className="font-medium text-sm sm:text-base text-foreground">
+              {nome}
+            </h3>
+            <span className="text-xs sm:text-sm font-semibold text-primary">
+              R$ {preco}
+            </span>
+          </div>
+        </Link>
 
         <button
           onClick={handleToggleFavorito}

@@ -7,15 +7,15 @@ import Footer from "../components/Footer";
 const produtos = [
   {
     id: 1,
-    nome: "Boné Webtech",
+    nome: "Camisa Webtech",
     preco: "45,00",
-    imagem: "/images/bone.png",
+    imagem: "/images/camisa.png",
   },
   {
     id: 2,
-    nome: "Adesivo Webtech",
-    preco: "15,00",
-    imagem: "/images/adesivo.png",
+    nome: "Boné Webtech",
+    preco: "35,00",
+    imagem: "/images/bone.png",
   },
   {
     id: 3,
@@ -25,9 +25,9 @@ const produtos = [
   },
   {
     id: 4,
-    nome: "Camisa Webtech",
-    preco: "35,00",
-    imagem: "/images/camisa.png",
+    nome: "Adesivo Webtech",
+    preco: "15,00",
+    imagem: "/images/adesivo.png",
   },
 ];
 
@@ -55,6 +55,7 @@ export default function Home() {
               {produtos.map((produto) => (
                 <ProductCard
                   key={produto.id}
+                  id={produto.id}
                   nome={produto.nome}
                   preco={produto.preco}
                   imagem={produto.imagem}
@@ -93,8 +94,8 @@ export default function Home() {
         <div className="mt-3 flex flex-col  sm:flex-row gap-6">
           <div>
             <img
-              src="/images/Webtech-all.png"
-              className="object-contain w-xl sm:w-xl"
+              src="/images/Webtech-all1.png"
+              className="object-contain border border-b-5 border-r-5 border-yellow-500 w-xl sm:w-xl"
               alt=""
             />
             <a
