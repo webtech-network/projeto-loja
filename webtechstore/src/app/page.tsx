@@ -35,12 +35,13 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans">
       <Navbar />
-
-      <img
-        src="/images/banner.png"
-        alt="Webtech Store"
-        className="object-cover sm:max-w-2xl md:max-w-4xl sm:flex-1 sm:mx-auto sm:mt-5 "
-      />
+      <a href="/produtos">
+        <img
+          src="/images/banner.png"
+          alt="Webtech Store"
+          className="object-cover sm:max-w-2xl md:max-w-4xl sm:flex-1 sm:mx-auto sm:mt-5 "
+        />
+      </a>
       <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col  py-12 px-8 sm:px-4">
         <div className="flex flex-col gap-6">
           <h1 className="text-xl text-center sm:text-2xl md:text-start font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">

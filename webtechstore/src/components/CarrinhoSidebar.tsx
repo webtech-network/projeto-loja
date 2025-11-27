@@ -34,6 +34,7 @@ export default function CarrinhoSidebar({
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
+            <a href="/perfil">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center">
                 <span className="text-sm font-medium text-white">E</span>
@@ -45,6 +46,7 @@ export default function CarrinhoSidebar({
                 </p>
               </div>
             </div>
+            </a>
             <button
               onClick={onClose}
               className="p-2 rounded-md hover:bg-background/5 transition-colors"

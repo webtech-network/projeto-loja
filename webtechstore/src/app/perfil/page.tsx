@@ -273,7 +273,7 @@ export default function PerfilPage() {
 
           {/* Modal */}
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-background rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border">
+            <div className="bg-background rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-indigo-800 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-clip-padding dark:[&::-webkit-scrollbar-track]:bg-gray-800 dark:[&::-webkit-scrollbar-thumb]:bg-indigo-900">
               {/* Header do Modal */}
               <div className="flex items-center justify-between p-6 border-b border-border">
                 <h2 className="text-xl font-semibold text-foreground">

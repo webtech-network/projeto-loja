@@ -5,8 +5,9 @@ import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { useFavoritos } from "../../../components/FavoritosContext";
 import { useCarrinho } from "../../../components/CarrinhoContext";
-import { Heart, Star, ShoppingCart, Minus, Plus } from "phosphor-react";
+import { Heart, Star, ShoppingCart, Minus, Plus, NotePencil } from "phosphor-react";
 import Toast from "../../../components/Toast";
+import ModalEditarProduto from "../../../components/ModalEditarProduto";
 
 // Dados mockados dos produtos (normalmente viria de uma API)
 const produtos = [
@@ -107,6 +108,8 @@ export default function ProdutoDetalhes() {
   const [imagemAtual, setImagemAtual] = useState(produto?.imagem || "");
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [modalEdicaoAberto, setModalEdicaoAberto] = useState(false);
+  const [produtoParaEditar, setProdutoParaEditar] = useState<any>(null);
 
   if (!produto) {
     return (
@@ -179,6 +182,42 @@ export default function ProdutoDetalhes() {
     }
   };
 
+  const abrirModalEdicao = () => {
+    const produtoParaModal = {
+      id: produto.id,
+      nome: produto.nome,
+      preco: produto.preco,
+      imagem: produto.imagem,
+      descricao: produto.descricao,
+      variacoes: [
+        ...produto.cores.map((cor, index) => ({
+          id: index + 1,
+          tipo: "cor" as const,
+          valor: cor.nome,
+          imagem: cor.imagem || produto.imagem,
+        })),
+        ...produto.tamanhos.map((tamanho, index) => ({
+          id: index + 100,
+          tipo: "tamanho" as const,
+          valor: tamanho,
+        })),
+      ],
+    };
+    setProdutoParaEditar(produtoParaModal);
+    setModalEdicaoAberto(true);
+  };
+
+  const fecharModalEdicao = () => {
+    setModalEdicaoAberto(false);
+    setProdutoParaEditar(null);
+  };
+
+  const salvarProdutoEditado = (produtoAtualizado: any) => {
+    setToastMessage("Produto atualizado com sucesso!");
+    setShowToast(true);
+    console.log("Produto atualizado:", produtoAtualizado);
+  };
+
   const renderEstrelas = (avaliacao: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -230,10 +269,17 @@ export default function ProdutoDetalhes() {
             </div>{" "}
             {/* Detalhes do produto */}
             <div className="flex flex-col">
-              <div className="mb-2">
+              <div className="mb-2 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">
                   {produto.categoria}
                 </span>
+                <button
+                  onClick={abrirModalEdicao}
+                  className="flex items-center gap-2 px-3 py-2 bg-indigo-900 hover:bg-indigo-800 text-white rounded-lg transition-colors font-medium text-sm"
+                >
+                  <NotePencil size={18} />
+                  Editar produto
+                </button>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
@@ -398,6 +444,16 @@ export default function ProdutoDetalhes() {
       </main>
 
       <Footer />
+
+      {/* Modal de edição */}
+      {produtoParaEditar && (
+        <ModalEditarProduto
+          produto={produtoParaEditar}
+          isOpen={modalEdicaoAberto}
+          onClose={fecharModalEdicao}
+          onSave={salvarProdutoEditado}
+        />
+      )}
 
       {showToast && (
         <Toast
