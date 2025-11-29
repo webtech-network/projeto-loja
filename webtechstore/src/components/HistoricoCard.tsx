@@ -48,11 +48,11 @@ export default function HistoricoCard({pedido,verDetalhes,avaliar}:HistoricoCard
       return `R$${total.toFixed(2).replace(".", ",")}`;
     },[pedido]);
   return (
-    <div className="border-2 rounded-xl border-[#364153] py-8 sm:py-4 sm:px-4 px-8 flex flex-col justify-center">
+    <div className="border-2 rounded-xl border-border py-4 px-4 sm:px-6 flex flex-col justify-center">
      <div className="flex justify-between items-center">
       <div className="flex items-center gap-2"> 
           <h2 className="text-lg font-semibold">Pedido {pedido.id} </h2>
-          <h2 className="text-lg sm:text-sm text-gray-400">({qtdItens} {(qtdItens>1)? "itens" :"item"})</h2>
+          <h2 className="text-lg sm:text-sm text-gray-500 dark:text-gray-400">({qtdItens} {(qtdItens>1)? "itens" :"item"})</h2>
       </div>
       <p className="text-sm sm:text-xs">Concluído</p>
      </div>
@@ -61,12 +61,12 @@ export default function HistoricoCard({pedido,verDetalhes,avaliar}:HistoricoCard
         <h4 className="text-base font-medium">{pedido.itens[0].nome}</h4>
         <div className="flex items-center gap-4">
           {pedido.itens[0].variacoes.map((variacao) => (
-            <p key={variacao.id} className="text-[10px]">{variacao.tipo}: {variacao.valor}</p>
+            <p key={variacao.id} className="text-xs">{variacao.tipo}: {variacao.valor}</p>
           )) }
         </div>
       </div>
       <div>
-        <p className="font-semibold">Total</p>
+        <p className="font-semibold text-right">Total</p>
         <p className="font-semibold">{totalPreco}</p>
       </div>
     </div>
@@ -74,12 +74,12 @@ export default function HistoricoCard({pedido,verDetalhes,avaliar}:HistoricoCard
         <button 
         type="submit"
         onClick={verDetalhes}
-        className="size-full mt-2 px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base border-2 rounded-md border-[#364153] font-semibold" >
+        className="size-full mt-2 px-3 py-1.5 text-sm text-gray-500 dark:text-gray-200 sm:px-4 sm:py-2 sm:text-base border-2 rounded-md border-border font-semibold hover:scale-102 transition-transform duration-200 ease-all cursor-pointer" >
          Ver Detalhes</button>
         <button 
         type="submit"
         onClick={avaliar}
-        className="size-full mt-2 px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base border rounded-md bg-yellow-500 text-white font-semibold" >
+        className="size-full mt-2 px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base border rounded-md bg-yellow-500 text-white font-semibold cursor-pointer hover:scale-102 transition-transform duration-200 ease-all" >
         Avaliar</button>
      </div>
     </div>
