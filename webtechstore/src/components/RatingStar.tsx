@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Star } from "phosphor-react";
 
 interface RatingStarProps {
   onRatingChange?: (rating: number) => void;
@@ -30,21 +31,22 @@ export default function RatingStar({
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = star <= (hoverRating || rating);
-        const src = filled ? "/images/star.png" : "/images/star_cinza.png";
         return (
-          <img
+          <Star
             key={star}
-            src={src}
-            alt={
-              filled ? `Estrela preenchida ${star}` : `Estrela vazia ${star}`
-            }
+            size={40}
+            weight={filled ? "fill" : "regular"}
+            className={`cursor-pointer transition-colors ${
+              filled
+                ? "text-yellow-500 hover:text-yellow-600"
+                : "text-gray-300 dark:text-gray-600 hover:text-yellow-400"
+            }`}
             onClick={() => handleClick(star)}
             onMouseEnter={() => handleMouseEnter(star)}
             onMouseLeave={handleMouseLeave}
-            className="w-10 h-10 cursor-pointer transition-opacity"
             role="button"
             aria-label={`Avaliar ${star} estrela${star > 1 ? "s" : ""}`}
           />
