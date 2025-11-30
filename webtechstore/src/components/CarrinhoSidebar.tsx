@@ -35,17 +35,17 @@ export default function CarrinhoSidebar({
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
             <a href="/perfil">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center">
-                <span className="text-sm font-medium text-white">E</span>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center">
+                  <span className="text-sm font-medium text-white">E</span>
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium">Olá, Eduarda</h2>
+                  <p className="text-xs text-muted-foreground">
+                    eduardavieira@gmail.com
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-sm font-medium">Olá, Eduarda</h2>
-                <p className="text-xs text-muted-foreground">
-                  eduardavieira@gmail.com
-                </p>
-              </div>
-            </div>
             </a>
             <button
               onClick={onClose}
@@ -64,9 +64,11 @@ export default function CarrinhoSidebar({
           {/* Lista de itens */}
           <div className="flex-1 overflow-y-auto p-4">
             <div className="space-y-4">
-              {itens.map((item) => (
+              {itens.map((item, index) => (
                 <div
-                  key={item.id}
+                  key={`${item.id}-${item.cor || ""}-${
+                    item.tamanho || ""
+                  }-${index}`}
                   className="flex gap-3 p-3 rounded-lg border border-border/50 bg-card"
                 >
                   <div className="w-14 h-14 rounded-md overflow-hidden bg-muted shrink-0">
@@ -99,7 +101,12 @@ export default function CarrinhoSidebar({
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() =>
-                            atualizarQuantidade(item.id, item.quantidade - 1)
+                            atualizarQuantidade(
+                              item.id,
+                              item.quantidade - 1,
+                              item.cor,
+                              item.tamanho
+                            )
                           }
                           className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-background/5"
                         >
@@ -110,7 +117,12 @@ export default function CarrinhoSidebar({
                         </span>
                         <button
                           onClick={() =>
-                            atualizarQuantidade(item.id, item.quantidade + 1)
+                            atualizarQuantidade(
+                              item.id,
+                              item.quantidade + 1,
+                              item.cor,
+                              item.tamanho
+                            )
                           }
                           className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:bg-background/5"
                         >
@@ -122,7 +134,9 @@ export default function CarrinhoSidebar({
 
                   <div className="flex flex-col items-end justify-between shrink-0">
                     <button
-                      onClick={() => removerItem(item.id)}
+                      onClick={() =>
+                        removerItem(item.id, item.cor, item.tamanho)
+                      }
                       className="flex p-1 bg-destructive/10 text-destructive rounded transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer"
                     >
                       <Trash size={18} />

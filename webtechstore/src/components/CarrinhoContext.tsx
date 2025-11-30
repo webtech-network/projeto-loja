@@ -18,8 +18,13 @@ interface CarrinhoContextType {
   adicionarItem: (
     item: Omit<ItemCarrinho, "quantidade"> & { quantidade?: number }
   ) => void;
-  removerItem: (id: number) => void;
-  atualizarQuantidade: (id: number, quantidade: number) => void;
+  removerItem: (id: number, cor?: string, tamanho?: string) => void;
+  atualizarQuantidade: (
+    id: number,
+    quantidade: number,
+    cor?: string,
+    tamanho?: string
+  ) => void;
   limparCarrinho: () => void;
   getTotalItens: () => number;
   getTotal: () => string;
@@ -101,19 +106,31 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const removerItem = (id: number) => {
-    setItens((prevItens) => prevItens.filter((item) => item.id !== id));
+  const removerItem = (id: number, cor?: string, tamanho?: string) => {
+    setItens((prevItens) =>
+      prevItens.filter(
+        (item) =>
+          !(item.id === id && item.cor === cor && item.tamanho === tamanho)
+      )
+    );
   };
 
-  const atualizarQuantidade = (id: number, novaQuantidade: number) => {
+  const atualizarQuantidade = (
+    id: number,
+    novaQuantidade: number,
+    cor?: string,
+    tamanho?: string
+  ) => {
     if (novaQuantidade <= 0) {
-      removerItem(id);
+      removerItem(id, cor, tamanho);
       return;
     }
 
     setItens((prevItens) =>
       prevItens.map((item) =>
-        item.id === id ? { ...item, quantidade: novaQuantidade } : item
+        item.id === id && item.cor === cor && item.tamanho === tamanho
+          ? { ...item, quantidade: novaQuantidade }
+          : item
       )
     );
   };
