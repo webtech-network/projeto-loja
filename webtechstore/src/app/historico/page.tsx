@@ -6,17 +6,18 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import HistoricoCard from "../../components/HistoricoCard";
 import ModalDetalhesPedido from "../../components/ModalDetalhesPedido";
-import ModalAvaliarPedido from "../../components/ModalAvaliarPedido";
+import ModalAvaliarProdutos from "../../components/ModalAvaliarProdutos";
 
 type Variacao = { id: number; tipo: string; valor: string };
+type Avaliacao = { rating: number; comentario: string; imagem?: File[] };
 type Item = {
   id: number;
   nome: string;
   preco: string;
   imagem: string;
   variacoes: Variacao[];
+  avaliacao?: Avaliacao; // Avaliação individual do produto
 };
-type Avaliacao = { rating: number; comentario: string; imagem?: File[] };
 type Pedido = {
   id: number;
   itens: Item[];
@@ -25,7 +26,6 @@ type Pedido = {
   dataRecebimento: string;
   entregaRecebida: string;
   status: "concluido" | "em andamento" | "cancelado";
-  avaliacao: Avaliacao;
 };
 {
   /**Isso será trocado pela API, ela deverá vir com os pedidos do usuário */
@@ -43,6 +43,7 @@ const initialPedidos: Pedido[] = [
           { id: 1, tipo: "Tamanho", valor: "57cm" },
           { id: 2, tipo: "Cor", valor: "Preto" },
         ],
+        avaliacao: { rating: 5, comentario: "Excelente produto!", imagem: [] },
       },
       {
         id: 2,
@@ -53,6 +54,7 @@ const initialPedidos: Pedido[] = [
           { id: 1, tipo: "Tamanho", valor: "57cm" },
           { id: 2, tipo: "Cor", valor: "Preto" },
         ],
+        // Sem avaliação ainda
       },
       {
         id: 3,
@@ -81,13 +83,12 @@ const initialPedidos: Pedido[] = [
     dataRecebimento: "05/01/2025",
     entregaRecebida: "Jurandir",
     status: "concluido",
-    avaliacao: { rating: 1, comentario: "", imagem: [] },
   },
   {
     id: 2,
     itens: [
       {
-        id: 2,
+        id: 5,
         nome: "Caneca",
         preco: "R$30,00",
         imagem: "/images/caneca.png",
@@ -97,7 +98,7 @@ const initialPedidos: Pedido[] = [
         ],
       },
       {
-        id: 3,
+        id: 6,
         nome: "Caneca",
         preco: "R$30,00",
         imagem: "/images/caneca.png",
@@ -113,13 +114,12 @@ const initialPedidos: Pedido[] = [
     dataRecebimento: "20/11/2024",
     entregaRecebida: "Maria",
     status: "concluido",
-    avaliacao: { rating: 0, comentario: "", imagem: [] },
   },
   {
     id: 3,
     itens: [
       {
-        id: 3,
+        id: 7,
         nome: "Camisa",
         preco: "R$35,00",
         imagem: "/images/camisa.png",
@@ -127,6 +127,7 @@ const initialPedidos: Pedido[] = [
           { id: 5, tipo: "Tamanho", valor: "M" },
           { id: 6, tipo: "Cor", valor: "Preto" },
         ],
+        avaliacao: { rating: 4, comentario: "Bom produto", imagem: [] },
       },
     ],
     enderecoEntrega:
@@ -135,7 +136,6 @@ const initialPedidos: Pedido[] = [
     dataRecebimento: "10/09/2024",
     entregaRecebida: "João",
     status: "concluido",
-    avaliacao: { rating: 4, comentario: "Bom", imagem: [] },
   },
 ];
 
@@ -153,7 +153,7 @@ export default function HistoricoPage() {
         <div className="max-w-4xl mx-auto">
           <button
             onClick={() => window.history.back()}
-            className="mb-4 text-gray-600 dark:text-gray-400 hover:underline flex items-center gap-2"
+            className="mb-4 text-gray-600 dark:text-gray-400 hover:underline flex items-center gap-2 cursor-pointer"
           >
             <ArrowLeft size={24} />
           </button>
@@ -227,25 +227,23 @@ export default function HistoricoPage() {
         />
       )}
 
-      {/* Modal de avaliar o pedido */}
+      {/* Modal de avaliar produtos */}
       {isOpenAvaliar && selectedPedido && (
-        <ModalAvaliarPedido
-          avaliacao={selectedPedido.avaliacao}
+        <ModalAvaliarProdutos
           isOpen={isOpenAvaliar}
           onClose={() => setIsOpenAvaliar(false)}
-          onSave={(avaliacao) => {
+          produtos={selectedPedido.itens}
+          onSave={(produtoId, avaliacao) => {
             setPedidos((prev) =>
-              prev.map((pp) =>
-                pp.id === selectedPedido.id
+              prev.map((pedido) =>
+                pedido.id === selectedPedido.id
                   ? {
-                      ...pp,
-                      avaliacao: {
-                        rating: avaliacao.rating,
-                        comentario: avaliacao.comentario,
-                        imagem: avaliacao.imagem ?? [],
-                      },
+                      ...pedido,
+                      itens: pedido.itens.map((item) =>
+                        item.id === produtoId ? { ...item, avaliacao } : item
+                      ),
                     }
-                  : pp
+                  : pedido
               )
             );
             setIsOpenAvaliar(false);

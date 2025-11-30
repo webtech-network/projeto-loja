@@ -249,13 +249,13 @@ export default function PerfilPage() {
           </div>
 
           {/* Histórico de Compras */}
-          <div className="mt-8  rounded-lg p-6 border border-border">
+          <div className="mt-5  rounded-lg p-6 border border-border dark:bg-gray-900">
             <h2 className="text-xl font-semibold text-foreground mb-6">
               Histórico de Compras
             </h2>
             <button 
               onClick={() => window.location.href = '/historico'}
-              className="w-full py-3 bg-indigo-900 hover:bg-indigo-950 text-white rounded-md font-medium transition-colors"
+              className="w-full py-3 bg-indigo-900 hover:bg-indigo-950 text-white rounded-md font-medium transition-colors cursor-pointer"
             >
               Visualizar histórico de compras
             </button>

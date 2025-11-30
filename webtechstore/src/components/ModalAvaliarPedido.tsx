@@ -23,12 +23,14 @@ interface ModalAvaliarPedidoProps {
   isOpen: boolean;
   onSave: (avaliacao: Avaliacao) => void;
   onClose: () => void;
+  produtoNome?: string; // Nome do produto sendo avaliado
 }
 export default function ModalAvaliarPedido({
   avaliacao,
   isOpen,
   onSave,
   onClose,
+  produtoNome,
 }: ModalAvaliarPedidoProps) {
   const [formAvaliacao, setFormAvaliacao] = useState<Avaliacao>({
     rating: 5,
@@ -65,7 +67,7 @@ export default function ModalAvaliarPedido({
         {/* Header */}
         <DialogHeader className="px-6 py-5 border-b border-gray-200 dark:border-gray-700 shrink-0">
           <DialogTitle className="text-xl font-semibold text-center">
-            Avaliação do Pedido
+            {produtoNome ? `Avaliar ${produtoNome}` : "Avaliação do Pedido"}
           </DialogTitle>
         </DialogHeader>
 
@@ -74,7 +76,9 @@ export default function ModalAvaliarPedido({
           {/* Rating Section */}
           <div className="text-center space-y-2 sm:space-y-3">
             <h3 className="text-base sm:text-lg font-medium text-foreground">
-              Como você avalia este pedido?
+              {produtoNome
+                ? `Como você avalia ${produtoNome}?`
+                : "Como você avalia este pedido?"}
             </h3>
             <div className="flex justify-center">
               <RatingStar
