@@ -97,6 +97,12 @@ export default function LoginPage() {
                   </button>
                 </div>
               </label>
+               <Link
+                href="/esqueci-senha"
+                className="text-xs text-yellow hover:underline font-medium block pl-1"
+              >
+                Esqueci minha senha
+              </Link>
 
               <button
                 type="submit"
@@ -106,15 +112,18 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <p className="text-sm mt-4 text-muted-foreground text-center">
-              Não tem uma conta?{" "}
-              <Link
-                href="/cadastro"
-                className="text-primary hover:underline font-medium"
-              >
-                Cadastre-se
-              </Link>
-            </p>
+            <div className="text-center mt-4 space-y-2">
+
+              <p className="text-sm text-muted-foreground">
+                Não tem uma conta?{" "}
+                <Link
+                  href="/cadastro"
+                  className="text-primary hover:underline font-medium"
+                >
+                  Cadastre-se
+                </Link>
+              </p>
+            </div>
           </div>
         </section>
       </main>

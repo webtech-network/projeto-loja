@@ -116,13 +116,13 @@ export default function ProdutoDetalhes() {
       <div className="flex min-h-screen flex-col bg-background font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-4">
+          <div className="text-center px-4 py-8">
+            <h1 className="text-2xl font-bold text-foreground mb-7">
               Produto não encontrado
             </h1>
             <a
               href="/produtos"
-              className="text-yellow-500 hover:text-yellow-600 underline"
+              className="bg-yellow text-white rounded-md p-3  hover:bg-yellow-600 transition-colors"
             >
               Voltar para produtos
             </a>
